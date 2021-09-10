@@ -1,90 +1,86 @@
 <template>
-  <div class="jumbotron">
+  <div class='add-expense-wrapper'>
     <h1>Add Expense</h1>
-    <div class="row">
-      <div class="col">
-        <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2">
-          <b-dropdown-item>First Action</b-dropdown-item>
-          <b-dropdown-item>Second Action</b-dropdown-item>
-          <b-dropdown-item>Third Action</b-dropdown-item>
-          <b-dropdown-divider></b-dropdown-divider>
-          <b-dropdown-item active>Active action</b-dropdown-item>
-          <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-        </b-dropdown>
-      </div>
-      <div class="col">
-        <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2">
-          <b-dropdown-item>First Action</b-dropdown-item>
-          <b-dropdown-item>Second Action</b-dropdown-item>
-          <b-dropdown-item>Third Action</b-dropdown-item>
-          <b-dropdown-divider></b-dropdown-divider>
-          <b-dropdown-item active>Active action</b-dropdown-item>
-          <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-        </b-dropdown>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2">
-          <b-dropdown-item>First Action</b-dropdown-item>
-          <b-dropdown-item>Second Action</b-dropdown-item>
-          <b-dropdown-item>Third Action</b-dropdown-item>
-          <b-dropdown-divider></b-dropdown-divider>
-          <b-dropdown-item active>Active action</b-dropdown-item>
-          <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-        </b-dropdown>
-      </div>
-      <div class="col">
-        <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2">
-          <b-dropdown-item>First Action</b-dropdown-item>
-          <b-dropdown-item>Second Action</b-dropdown-item>
-          <b-dropdown-item>Third Action</b-dropdown-item>
-          <b-dropdown-divider></b-dropdown-divider>
-          <b-dropdown-item active>Active action</b-dropdown-item>
-          <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-        </b-dropdown>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2">
-          <b-dropdown-item>First Action</b-dropdown-item>
-          <b-dropdown-item>Second Action</b-dropdown-item>
-          <b-dropdown-item>Third Action</b-dropdown-item>
-          <b-dropdown-divider></b-dropdown-divider>
-          <b-dropdown-item active>Active action</b-dropdown-item>
-          <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-        </b-dropdown>
-      </div>
-      <div class="col">
-        <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2">
-          <b-dropdown-item>First Action</b-dropdown-item>
-          <b-dropdown-item>Second Action</b-dropdown-item>
-          <b-dropdown-item>Third Action</b-dropdown-item>
-          <b-dropdown-divider></b-dropdown-divider>
-          <b-dropdown-item active>Active action</b-dropdown-item>
-          <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-        </b-dropdown>
-      </div>
-    </div>
-    <div class="col">
-        <button class="btn btn-outline-primary float-right">Submit</button>
-      </div>
-    
+    <b-form id="expense-form">
+      <b-row class="mb-3">
+        <b-col>
+          <b-input-group prepend="Date">
+            <b-form-datepicker
+              v-model='expense.date'
+              required
+              :date-format-options="{ year: 'numeric', month: '2-digit', day: '2-digit' }">
+            </b-form-datepicker>
+          </b-input-group>
+        </b-col>
+        <b-col>
+          <b-input-group prepend="Category">
+            <b-form-select  v-model="expense.category" :options="categoryOptions" required></b-form-select>
+          </b-input-group>
+        </b-col>
+      </b-row>
+      <b-row class="mb-3">
+        <b-col>
+          <b-input-group prepend="Who paid">
+            <b-form-select v-model="expense.whoPaid" :options="whoPaidOptions" required></b-form-select>
+          </b-input-group>
+        </b-col>
+        <b-col>
+          <b-input-group prepend="Who pays">
+            <b-form-select v-model="expense.whoPays" :options="whoPaysOptions" required></b-form-select>
+          </b-input-group>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="12" sm="6" class="mb-3">
+          <b-input-group prepend="Description">
+            <b-form-textarea v-model="expense.description" placeholder="Description" rows="1"></b-form-textarea>
+          </b-input-group>
+        </b-col>
+        <b-col class="mb-3">
+          <b-input-group prepend="Amount">
+            <b-form-input v-model="expense.amount" type="number" min="0" step="0.01" required></b-form-input>
+          </b-input-group>
+        </b-col>
+        <b-col cols="3" sm="2" class="submit-button">
+          <b-button type="submit" class="float-right">
+            Submit
+          </b-button>
+        </b-col>
+      </b-row>
+    </b-form>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   data() {
     return {
-      items: [
-        { a: '$1', b: '$2', c: '$3', d: '$4' },
-        { a: '$1', b: '$2', c: '$3', d: '$4' },
-        { a: '$1', b: '$2', c: '$3', d: '$4' },
-        { a: '$1', b: '$2', c: '$3', d: '$4' },
+      expense: {
+        date: new Date().toISOString().slice(0, 10),
+        category: '',
+        whoPaid: '',
+        whoPays: 'Everyone',
+        description: '',
+        amount: 0
+      },
+      categoryOptions: [
+        {value: '', text: 'Category...', disabled: true},
+        'Utilities', 'Groceries', 'Restaurant', 'Other'
+      ],
+      whoPaidOptions: [
+        {value: '', text: 'Who paid...', disabled: true},
+        'a', 'b', 'c', 'd'
+      ],
+      whoPaysOptions: [
+        'Everyone', 'a', 'b', 'c', 'd'
       ],
     }
   },
 }
 </script>
+
+<style lang="scss">
+textarea {
+  overflow: auto;
+}
+</style>

@@ -13,9 +13,10 @@
   </b-jumbotron>
 </template>
 
-<script scoped>
+<script lang="ts">
+import { BTable } from '../node_modules/bootstrap-vue/esm/components/table';
 export default {
-  data() {
+  data(): {fields: BTable['fields'], items: BTable['items']} {
     return {
       fields: [
         {
@@ -23,8 +24,7 @@ export default {
           label: '',
           headerTitle: 'Rent Type',
           isRowHeader: true,
-          class: 'rent-type-column',
-          tdClass: 'float-right'
+          class: ['rent-type-column', 'text-right']
 
         },
         'a',
