@@ -10,6 +10,14 @@
             <NuxtLink to='/options' class='btn'>
                 <h3> Options </h3>
             </NuxtLink>
+            <span v-if="$auth.loggedIn">
+                {{ $auth.user.email }}
+                <b-btn text>Logout</b-btn>
+            </span>
+            <span v-else>
+                <NuxtLink to="/login" class='btn'>Login</NuxtLink>
+                <NuxtLink to="/register" class='btn'>Register</NuxtLink>
+            </span>
         </div>
     </div>
 </template>

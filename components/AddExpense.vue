@@ -8,37 +8,36 @@
             <b-form-datepicker
               v-model='expense.date'
               required
-              :date-format-options="{ year: 'numeric', month: '2-digit', day: '2-digit' }">
-            </b-form-datepicker>
+              :date-format-options="{ year: 'numeric', month: '2-digit', day: '2-digit' }" />
           </b-input-group>
         </b-col>
         <b-col>
           <b-input-group prepend="Category">
-            <b-form-select  v-model="expense.category" :options="categoryOptions" required></b-form-select>
+            <b-form-select v-model="expense.category" :options="categoryOptions" required />
           </b-input-group>
         </b-col>
       </b-row>
       <b-row class="mb-3">
         <b-col>
           <b-input-group prepend="Who paid">
-            <b-form-select v-model="expense.whoPaid" :options="whoPaidOptions" required></b-form-select>
+            <b-form-select v-model="expense.whoPaid" :options="whoPaidOptions" required />
           </b-input-group>
         </b-col>
         <b-col>
           <b-input-group prepend="Who pays">
-            <b-form-select v-model="expense.whoPays" :options="whoPaysOptions" required></b-form-select>
+            <b-form-select v-model="expense.whoPays" :options="whoPaysOptions" required />
           </b-input-group>
         </b-col>
       </b-row>
       <b-row>
         <b-col cols="12" sm="6" class="mb-3">
           <b-input-group prepend="Description">
-            <b-form-textarea v-model="expense.description" placeholder="Description" rows="1"></b-form-textarea>
+            <b-form-textarea v-model="expense.description" placeholder="Description" rows="1" />
           </b-input-group>
         </b-col>
         <b-col class="mb-3">
           <b-input-group prepend="Amount">
-            <b-form-input v-model="expense.amount" type="number" min="0" step="0.01" required></b-form-input>
+            <b-form-input v-model="expense.amount" type="number" placeholder="Amount..." min="0" step="0.01" required />
           </b-input-group>
         </b-col>
         <b-col cols="3" sm="2" class="submit-button">
@@ -61,7 +60,7 @@ export default {
         whoPaid: '',
         whoPays: 'Everyone',
         description: '',
-        amount: 0
+        amount: ''
       },
       categoryOptions: [
         {value: '', text: 'Category...', disabled: true},

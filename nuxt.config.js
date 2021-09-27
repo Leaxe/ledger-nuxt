@@ -32,10 +32,16 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '@/plugins/mirage.ts'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
+
+  // require global authentication (must be logged in everywhere), else redirect to homepage (need to make one)
+  router: {
+    middleware: ['auth']
+  },
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -48,7 +54,35 @@ export default {
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
     '@nuxtjs/style-resources',
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
   ],
+
+  axios: {
+    baseURL: 'http://localhost:3000/api'
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+          global: true,
+          // required: true,
+          // type: 'Bearer'
+        },
+        user: {
+          property: 'user',
+          // autoFetch: true
+        },
+        endpoints: {
+          login: { url: '/sessions', method: 'post' },
+          logout: { url: '/auth/logout', method: 'post' },
+          user: { url: '/sessions/user', method: 'get' }
+        }
+      }
+    }
+  },
 
   styleResources: {
     scss: [
